@@ -1,7 +1,13 @@
 # Logs
+v8.log
 logs
 *.log
 npm-debug.log*
+
+# Others
+.DS_Store
+build
+.tmp
 
 # Runtime data
 pids
