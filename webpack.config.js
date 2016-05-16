@@ -1,63 +1,78 @@
-/* global __dirname */
+const webpack = require('webpack');
+const path = require('path');
 
-var path = require('path');
-
-var webpack = require('webpack');
-var CopyWebpackPlugin = require('copy-webpack-plugin');
-
-var dir_js = path.resolve(__dirname, 'src/js');
-var dir_html = path.resolve(__dirname, 'src/html');
-var dir_build = path.resolve(__dirname, 'build');
+const nodeEnv = process.env.NODE_ENV || 'development';
+const isProd = nodeEnv === 'production';
 
 module.exports = {
-    entry: {
-      bundle: [path.resolve(dir_js, 'application.js')]
-    },
-    output: {
-      path: dir_build,
-      filename: '[name].js' // production = filename: '[name]-[hash].js'
-    },
-    devServer: {
-      contentBase: dir_build,
-      outputPath: dir_build,
-      port: 5050,
-      hot: true,
-      inline: true
-    },
-    module: {
-      preLoaders: [
-        { test: /\.tag$/, exclude: /node_modules/, loader: 'riotjs-loader', query: { type: 'es6' } }
-      ],
-      loaders: [
-        { test: /\.js|\.tag$/, exclude: /node_modules/, include: /src/, loader: 'babel-loader', query: {modules: 'common'} },
-        { test: /\.css$/, loader: 'style-loader!css-loader!postcss-loader' }
-      ]
-    },
-    plugins: [
-      // Use Environnements
-      new webpack.EnvironmentPlugin([
-        'NODE_ENV'
-      ]),
-      new webpack.optimize.UglifyJsPlugin({
-        compress: {
-          warnings: false
+  devtool: isProd ? 'hidden-source-map' : 'cheap-eval-source-map',
+  context: path.join(__dirname, './src/client'),
+  entry: {
+    js: './index.js',
+    vendor: ['react']
+  },
+  output: {
+    path: path.join(__dirname, './static'),
+    filename: 'bundle.js'
+  },
+  module: {
+    loaders: [
+      {
+        test: /\.html$/,
+        loader: 'file',
+        query: {
+          name: '[name].[ext]'
         }
-      }),
-      // Use Riotjs plugin
-      new webpack.ProvidePlugin({
-        riot: 'riot'
-      }),
-      // Simply copies the files over
-      new CopyWebpackPlugin([
-        { from: dir_html } // to: output.path
-      ]),
-      // Avoid publishing files when compilation fails
-      new webpack.NoErrorsPlugin()
+      },
+      {
+        test: /\.css$/,
+        loaders: [
+          'style',
+          'css'
+        ]
+      },
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        loaders: [
+          // 'react-hot',
+          'babel-loader'
+        ]
+      },
     ],
-    stats: {
-      // Nice colored output
-      colors: true
-    },
-    // Create source maps for the bundle
-    devtool: 'source-map',
+  },
+  resolve: {
+    extensions: ['', '.js', '.jsx'],
+    modules: [
+      path.resolve('./src/client'),
+      'node_modules'
+    ]
+  },
+  plugins: [
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      minChunks: Infinity,
+      filename: 'vendor.bundle.js'
+    }),
+    new webpack.LoaderOptionsPlugin({
+      minimize: true,
+      debug: false
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      },
+      output: {
+        comments: false
+      },
+      sourceMap: false
+    }),
+    new webpack.DefinePlugin({
+      'process.env': { NODE_ENV: JSON.stringify(nodeEnv) }
+    })
+  ],
+  devServer: {
+    contentBase: './src/client'
+    // hot: true
+  }
 };
