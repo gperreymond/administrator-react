@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import individuals from './../../api/individuals';
+
 import { cyan500 } from 'material-ui/styles/colors';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -22,17 +24,16 @@ const styles = {
   }
 };
 
-export default class App extends Component {
-  /* constructor(props) {
-    super(props);
-  } */
+class App extends Component {
   render() {
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <div style={styles.container}>
-
+          <button onClick={individuals.login}>LOGIN</button>
         </div>
       </MuiThemeProvider>
     );
   }
 }
+
+export default App;
