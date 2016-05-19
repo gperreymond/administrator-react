@@ -1,0 +1,12 @@
+// react
+// packages
+// local
+
+// define action constants
+module.exports = {
+  USER_AUTH_GLOBAL_INFOS_SUCCESS: 'USER_AUTH_GLOBAL_INFOS_SUCCESS',
+  USER_LOGIN_SUCCESS: 'USER_LOGIN_SUCCESS',
+  USER_FAIL: 'USER_FAIL',
+  ERROR_BAD_AUTHENTIFICATION: 'Error: ERROR_BAD_AUTHENTIFICATION',
+  ERROR_INVALID_TOKEN: 'Invalid token'
+};

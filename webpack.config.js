@@ -6,9 +6,9 @@ const isProd = nodeEnv === 'production';
 
 module.exports = {
   devtool: isProd ? 'hidden-source-map' : 'cheap-eval-source-map',
-  context: path.join(__dirname, './src/client'),
+  context: path.join(__dirname, './src/js'),
   entry: {
-    js: './index.js',
+    js: './app.js',
     vendor: ['react']
   },
   output: {
@@ -44,7 +44,7 @@ module.exports = {
   resolve: {
     extensions: ['', '.js', '.jsx'],
     modules: [
-      path.resolve('./src/client'),
+      path.resolve('./src/js'),
       'node_modules'
     ]
   },
@@ -72,7 +72,7 @@ module.exports = {
     })
   ],
   devServer: {
-    contentBase: './src/client'
+    contentBase: './src'
     // hot: true
   }
 };
