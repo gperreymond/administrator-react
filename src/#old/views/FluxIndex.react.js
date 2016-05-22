@@ -31,6 +31,8 @@ const styles = {
   }
 };
 
+var compStats = null;
+
 // method to retrieve state from Stores
 var getIndexState = function() {
   return {
@@ -50,13 +52,13 @@ class FluxIndex extends Component {
     debug('constructor()');
     super(props);
     this.state = getIndexState();
-    AuthAPI.getGlobalInformations();
   }
 
   // add change listeners to stores
   componentDidMount() {
     debug('componentDidMount()');
     UserStore.addChangeListener(this._onChange.bind(this));
+    AuthAPI.getGlobalInformations();
   }
 
   // remove change listers from stores
@@ -69,9 +71,14 @@ class FluxIndex extends Component {
   _onChange() {
     this.setState(getIndexState());
     if (this.state.message!=='') {
-      this.handleTouchTap();
+      // this.handleTouchTap();
     }
-    debug('_onChange()', this.state);
+    if ( _.isArray(this.state.infos.abibaoInProgress)===true ) {
+      debug('abibaoInProgress is %s', this.state.infos.abibaoInProgress.length);
+      compStats = <h3>abibaoInProgress: { this.state.infos.abibaoInProgress.length }</h3>;
+    }
+    debug('_onChange() %o', this.state);
+    debug(getIndexState());
   }
 
   render() {
@@ -81,6 +88,7 @@ class FluxIndex extends Component {
         <Paper style={ styles.paperPage } zDepth={ 0 } rounded={ false }>
           <Paper style={ styles.paperContainer } zDepth={ 0 } rounded={ true }>
             <h1>Loading in progress...</h1>
+            { compStats }
           </Paper>
         </Paper>
       </MuiThemeProvider>

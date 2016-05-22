@@ -1,11 +1,10 @@
 // react
-import cookie from 'react-cookie';
 // packages
 import Debug from 'debug';
 import _ from 'lodash';
 // local
 import AppDispatcher from '../dispatcher/AppDispatcher';
-import FluxUserConstants from '../constants/FluxUserConstants';
+import FluxAppConstants from '../constants/FluxAppConstants';
 
 var debug = Debug('react:actions:user');
 
@@ -15,7 +14,7 @@ var FluxUserActions = {
   loginSuccess: function(data) {
     debug('loginSuccess() data=%o', data);
     AppDispatcher.handleAction({
-      actionType: FluxUserConstants.USER_LOGIN_SUCCESS,
+      actionType: FluxAppConstants.USER_LOGIN_SUCCESS,
       data: data
     })
   },
@@ -23,8 +22,9 @@ var FluxUserActions = {
   // fail
   fail: function(error) {
     debug('fail() error=%o', error);
-    let type = FluxUserConstants.USER_FAIL;
-    if (error.message===FluxUserConstants.ERROR_INVALID_TOKEN) { type = FluxUserConstants.ERROR_INVALID_TOKEN; }
+    let type = FluxAppConstants.USER_FAIL;
+    if (error.message===FluxAppConstants.ERROR_TOKEN_EXPIRED) { type = FluxAppConstants.ERROR_TOKEN_EXPIRED; }
+    if (error.message===FluxAppConstants.ERROR_INVALID_TOKEN) { type = FluxAppConstants.ERROR_INVALID_TOKEN; }
     AppDispatcher.handleAction({
       actionType: type,
       data: error

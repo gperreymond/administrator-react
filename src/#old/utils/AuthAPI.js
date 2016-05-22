@@ -25,8 +25,12 @@ module.exports = {
       url: 'http://api.pprod.abibao.com/v1/auth/global/informations',
     })
     .done((data) => {
-      data.token = _token;
-      debug('getGlobalInformations() done data=%s', data.token);
+      let newdata = {
+        token: _token,
+        globalInfos: data
+      };
+      debug('getGlobalInformations() done data=%o', newdata);
+      FluxUserActions.loginSuccess(newdata);
     })
     .fail((error) => {
       debug('getGlobalInformations() fail error=%s', error.responseJSON.message);
