@@ -1,5 +1,4 @@
 // react
-import cookie from 'react-cookie';
 // packages
 import Debug from 'debug';
 // local
@@ -13,21 +12,35 @@ class UserStore {
   constructor() {
     this.bindListeners({
       onReceivedCurrentUser: UserActions.RECEIVED_CURRENT_USER,
-      onReceivedLoading: UserActions.RECEIVED_LOADING
+      onReceivedLoading: UserActions.RECEIVED_LOADING,
+      onReceivedError: UserActions.RECEIVED_ERROR,
+      onHandleRequestClose:  UserActions.HANDLE_REQUEST_CLOSE
     });
     this.state = {
-      message: '',
+      // Snackbar
+      toastError: false,
+      toastMessage: '',
+      autoHideDuration: 2000,
+      // Loading state
       loading: false,
+      // User
       token: false,
       globalInfos: false,
       connected: false
     };
   }
 
-  static loggedIn() {
+  /* static loggedIn() {
     debug('loggedIn()');
     var _token = cookie.load('abibao_user_token');
     return !!_token;
+  } */
+
+  onHandleRequestClose() {
+    this.setState({
+      toastError: false,
+      toastMessage: ''
+    });
   }
 
   onReceivedLoading(loading) {
@@ -39,14 +52,20 @@ class UserStore {
 
   onReceivedCurrentUser(user) {
     debug('onReceivedCurrentUser() user=%o', user);
-    cookie.save('abibao_user_token', user.token, { path: '/' });
     this.setState({
       token: user.token,
       globalInfos: user.globalInfos,
       connected: true
-     });
+    });
   }
 
+  onReceivedError(error) {
+    debug('onReceivedError() error=%o', error);
+    this.setState({
+      toastError: true,
+      toastMessage: error.message
+    });
+  }
 }
 
 export default alt.createStore(UserStore, 'UserStore');

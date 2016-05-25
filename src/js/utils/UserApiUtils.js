@@ -23,5 +23,15 @@ export default {
       })
     }
     return xhr('http://api.pprod.abibao.com/v1/individuals/login', params);
-  }
+  },
+  loginWithToken(token) {
+    debug('loginWithToken() token=%s', token);
+    let params = {
+      method: 'get',
+      headers: {
+        'Authorization': token
+      }
+    }
+    return xhr('http://api.pprod.abibao.com/v1/auth/global/informations', params);
+  },
 };

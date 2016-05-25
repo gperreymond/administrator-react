@@ -1,7 +1,7 @@
 // react
 import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import { Paper, TextField } from 'material-ui';
+import { Paper, TextField, Snackbar } from 'material-ui';
 // packages
 import Debug from 'debug';
 import connectToStores from 'alt-utils/lib/connectToStores';
@@ -13,24 +13,30 @@ import RaisedButton from './../components/RaisedButton';
 import UserStore from './../stores/UserStore';
 import UserActions from './../actions/UserActions';
 
-const debug = Debug('react:containers:homepage');
+const debug = Debug('react:containers:login');
 
-class Homepage extends Component {
+class Login extends Component {
+
   constructor(props) {
     debug('constructor()');
     super(props);
   }
+
   static getStores() {
     return [UserStore];
   }
+
   static getPropsFromStores() {
-    return UserStore.getState();
+    let _store = UserStore.getState();
+    return _store;
   }
+
   loginHandler(event) {
     let email = this.refs.textFieldEmail.input.value;
     let password = this.refs.textFieldPassord.input.value;
     UserActions.login(email, password);
   }
+
   render() {
     debug('render()');
     return (
@@ -49,10 +55,20 @@ class Homepage extends Component {
               <RaisedButton label="Connexion" labelStyle={ styles.buttonLoginLabel } style={ styles.buttonLogin } onMouseDown={ this.loginHandler.bind(this) } disabled={ this.props.loading } />
             </Paper>
           </Paper>
+          <Snackbar
+            bodyStyle={ styles.toastError }
+            open={ this.props.toastError }
+            message={ this.props.toastMessage }
+            action="fermer"
+            autoHideDuration={ this.props.autoHideDuration }
+            onActionTouchTap={ UserActions.handleRequestClose }
+            onRequestClose={ UserActions.handleRequestClose }
+          />
         </Paper>
       </MuiThemeProvider>
     );
   }
+
 }
 
-export default connectToStores(Homepage);
+export default connectToStores(Login);
