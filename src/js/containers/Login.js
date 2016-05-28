@@ -52,19 +52,21 @@ class Login extends Component {
     debug('render()');
     return (
       <Paper style={ styles.paperContainer } zDepth={ 0 } rounded={ false }>
-        <SparkPanel
-          style={ styles.contentCenter }
-          title="Rentrez vos identifiants"
-          width={ 450 }
-          rounded={ true }
-          zDepth={ 0 }
-          backgroundTitleColor={ styles.colors.colorAbibaoMediumBlue }
-          textTitleColor={ styles.colors.colorAbibaoWhite }
-          backgroundContentColor={ styles.colors.colorAbibaoLightGrey }>
-          <TextField inputStyle={ styles.input } fullWidth={ true } ref="textFieldEmail" hintText="votre adresse email" />
-          <TextField fullWidth={ true } ref="textFieldPassord" hintText="votre mot de passe" type="password" />
-          <RaisedButton label="Connexion" onMouseDown={ this.loginHandler.bind(this) } disabled={ this.props.loading } />
-        </SparkPanel>
+        <div style={ styles.contentCenter }>
+          <SparkPanel
+            showHeader={ true }
+            title="Rentrez vos identifiants"
+            width={ 500 }
+            rounded={ true }
+            zDepth={ 0 }
+            backgroundTitleColor={ styles.colors.colorAbibaoMediumBlue }
+            textTitleColor={ styles.colors.colorAbibaoWhite }
+            backgroundContentColor={ styles.colors.colorAbibaoLightGrey }>
+            <TextField inputStyle={ styles.input } fullWidth={ true } ref="textFieldEmail" hintText="votre adresse email" />
+            <TextField fullWidth={ true } ref="textFieldPassord" hintText="votre mot de passe" type="password" />
+            <RaisedButton label="Connexion" onMouseDown={ this.loginHandler.bind(this) } disabled={ this.props.loading } />
+          </SparkPanel>
+        </div>
         <Snackbar
           bodyStyle={ styles.toastError }
           open={ this.props.toastError }

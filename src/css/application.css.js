@@ -8,6 +8,9 @@ const styles = {
     height: '100%',
     margin: 0,
     padding: 0,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
     background: colors.colorAbibaoWhite
   },
   paperContainer: {
@@ -15,32 +18,17 @@ const styles = {
     width: 960,
     margin: 'auto',
     padding: 0,
-    paddingTop: 50,
-    zIndex: 900
+    zIndex: 900,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center'
   },
-  paperContainerLoader: {
-    textAlign: 'center',
-    position: 'relative',
-    width: 350,
-    margin: 'auto',
-    padding: 0,
-    paddingTop: 50,
-    background: '#ffcc00'
-  },
-  button: {
-    content: {
-
-    },
-    label: {
-
-    }
+  contentCenter: {
+    margin: 'auto'
   },
   input: {
-
-  },
-  title: {
-    textAlign: 'center',
-    color: colors.colorAbibaoDarkBlue
+    border: 'solid red 2px',
+    marginBottom: 50
   }
 };
 

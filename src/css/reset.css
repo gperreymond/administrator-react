@@ -5,5 +5,5 @@ html, body, #root  {
 }
 
 input:-webkit-autofill {
-  background-color: white !important;
+  background: #ffffff !important;
 }

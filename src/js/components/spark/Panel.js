@@ -7,6 +7,7 @@ import { Paper } from 'material-ui';
 class SparkPanel extends Component {
 
   static propTypes = {
+    showHeader: PropTypes.bool,
     title: PropTypes.string,
     rounded: PropTypes.bool,
     zDepth: PropTypes.number,
@@ -19,40 +20,42 @@ class SparkPanel extends Component {
   }
 
   static defaultProps = {
-    title: 'New title',
+    showHeader: true,
+    title: 'Panel title',
     rounded: false,
     zDepth: 1,
-    width: 650,
+    width: 500,
     backgroundTitleColor: '#dedede',
     textTitleColor: '#101010',
     backgroundContentColor: '#f0f0f0'
   }
 
-  render() {
-    const {
-      title,
-      rounded,
-      zDepth,
-      width,
-      backgroundTitleColor,
-      textTitleColor,
-      backgroundContentColor,
-      children,
-      style
-    } = this.props;
+  showHeader() {
+    if (this.props.showHeader===true) {
+      return(
+        <Paper zDepth={ 0 } rounded={ this.props.rounded } style={ this._style.title }>
+          <h1 style={ this._style.titleText }>{ this.props.title }</h1>
+        </Paper>
+      );
+    } else {
+      return(<div></div>);
+    }
+  }
 
-    const _style = {
+  render() {
+
+    this._style = {
       panel: {
-        width: width
+        width: this.props.width
       },
       title: {
-        background: backgroundTitleColor,
+        background: this.props.backgroundTitleColor,
         textAlign: 'center',
         width: '100%',
         height: 60
       },
       titleText: {
-        color: textTitleColor,
+        color: this.props.textTitleColor,
         position: 'relative',
         top: '50%',
         transform: 'translateY(-50%)',
@@ -62,20 +65,21 @@ class SparkPanel extends Component {
       },
       content: {
         padding: 10,
-        background: backgroundContentColor,
+        background: this.props.backgroundContentColor,
+        display: 'flex',
+        flexDirection: 'column'
       }
     }
 
     return (
-      <Paper zDepth={ zDepth } rounded={ rounded } style={ _style.panel }>
-        <Paper zDepth={ 0 } rounded={ rounded } style={ _style.title }>
-          <h1 style={ _style.titleText }>{ title }</h1>
-        </Paper>
-        <Paper zDepth={ 0 } rounded={ rounded } style={ _style.content }>
-          { children }
+      <Paper zDepth={ this.props.zDepth } rounded={ this.props.rounded } style={ this._style.panel }>
+        { this.showHeader(true) }
+        <Paper zDepth={ 0 } rounded={ this.props.rounded } style={ this._style.content }>
+          { this.props.children }
         </Paper>
       </Paper>
     );
+
   }
 
 }
