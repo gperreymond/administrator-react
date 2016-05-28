@@ -5,11 +5,11 @@ import { browserHistory } from 'react-router';
 import Debug from 'debug';
 // local
 import alt from './../alt';
-import UserApiUtils from './../utils/UserApiUtils';
+import ApplicationApiUtils from './../utils/ApplicationApiUtils';
 
 var debug = Debug('react:actions:user');
 
-class UserActions {
+class ApplicationActions {
 
   constructor() {
   }
@@ -24,14 +24,20 @@ class UserActions {
   validateToken(token, callback) {
     debug('validateToken() token=%s', token);
     this.receivedLoading(true);
-    UserApiUtils.loginWithToken(token).then((infos) => {
+    ApplicationApiUtils.loginWithToken(token)
+    .then((infos) => {
       let user = {
         token: token,
         globalInfos: infos
       }
       cookie.save('abibao_user_token', user.token, { path: '/' });
       this.receivedCurrentUser(user);
-      browserHistory.push('/survey');
+      callback(null);
+    })
+    .catch((error) => {
+      this.receivedLoading(false);
+      cookie.remove('abibao_user_token');
+      callback(error);
     })
   }
 
@@ -39,10 +45,20 @@ class UserActions {
     debug('login() email=%s', email);
     this.receivedLoading(true);
     cookie.remove('abibao_user_token');
-    UserApiUtils.login(email, password).then((user) => {
+    ApplicationApiUtils.login(email, password).then((user) => {
       cookie.save('abibao_user_token', user.token, { path: '/' });
       this.receivedCurrentUser(user);
-      browserHistory.push('/survey');
+      browserHistory.push('/');
+    }).catch((error) => {
+      this.receivedError(error);
+    });
+  }
+
+  loadSurvey(token, urn) {
+    debug('loadSurvey() urn=%s', urn);
+    // this.receivedLoading(true);
+    ApplicationApiUtils.loadSurvey(token, urn).then((survey) => {
+      this.receivedCurrentSurvey(survey);
     }).catch((error) => {
       this.receivedError(error);
     });
@@ -51,29 +67,35 @@ class UserActions {
   // close toast
   handleRequestClose() {
     debug('handleRequestClose()');
-    alt.dispatch('UserActions.handleRequestClose');
+    alt.dispatch('ApplicationActions.handleRequestClose');
   }
 
   // actions in progress
   receivedLoading(loading) {
     debug('receivedLoading() loading=%s', loading);
-    alt.dispatch('UserActions.receivedLoading', loading);
+    alt.dispatch('ApplicationActions.receivedLoading', loading);
   }
 
   // good authentification
   receivedCurrentUser(user) {
     debug('receivedCurrentUser() user=%o', user);
-    alt.dispatch('UserActions.receivedCurrentUser', user);
+    alt.dispatch('ApplicationActions.receivedCurrentUser', user);
     this.receivedLoading(false);
   }
 
   // bad authentification
   receivedError(error) {
     debug('receivedError() error=%o', error);
-    alt.dispatch('UserActions.receivedError', error);
+    alt.dispatch('ApplicationActions.receivedError', error);
     this.receivedLoading(false);
   }
 
+  // survey to loading
+  receivedCurrentSurvey(survey) {
+    debug('receivedCurrentSurvey() survey=%o', survey);
+    alt.dispatch('ApplicationActions.receivedCurrentSurvey', survey);
+    // this.receivedLoading(false);
+  }
 }
 
-export default alt.createActions(UserActions);
+export default alt.createActions(ApplicationActions);

@@ -34,4 +34,14 @@ export default {
     }
     return xhr('http://api.pprod.abibao.com/v1/auth/global/informations', params);
   },
+  loadSurvey(token, urn) {
+    debug('loadSurvey() urn=%s', urn);
+    let params = {
+      method: 'get',
+      headers: {
+        'Authorization': token
+      }
+    }
+    return xhr('http://api.pprod.abibao.com/v1/auth/surveys/'+urn, params);
+  }
 };

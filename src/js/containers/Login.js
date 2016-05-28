@@ -1,17 +1,15 @@
 // react
 import React, { Component } from 'react';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { Paper, TextField, Snackbar } from 'material-ui';
 // packages
 import Debug from 'debug';
 import connectToStores from 'alt-utils/lib/connectToStores';
 // local
-import muiTheme from './../../css/muiTheme.css';
-import styles from './../../css/login.css';
-import Header from './../components/Header';
+import styles from './../../css/application.css';
+import SparkPanel from './../components/spark/Panel';
 import RaisedButton from './../components/RaisedButton';
-import UserStore from './../stores/UserStore';
-import UserActions from './../actions/UserActions';
+import ApplicationActions from './../actions/ApplicationActions';
+import ApplicationStore from './../stores/ApplicationStore';
 
 const debug = Debug('react:containers:login');
 
@@ -23,49 +21,60 @@ class Login extends Component {
   }
 
   static getStores() {
-    return [UserStore];
+    return [ApplicationStore];
   }
 
   static getPropsFromStores() {
-    let _store = UserStore.getState();
+    let _store = ApplicationStore.getState();
     return _store;
   }
 
   loginHandler(event) {
     let email = this.refs.textFieldEmail.input.value;
     let password = this.refs.textFieldPassord.input.value;
-    UserActions.login(email, password);
+    ApplicationActions.login(email, password);
   }
+
+  /*
+  <Paper style={ styles.login.panel.header } zDepth={ 0 } rounded={ true }>
+    <h1 style={ styles.login.panel.header_title }>Rentrez vos identifiants</h1>
+  </Paper>
+  <Paper style={ styles.login.panel.content } zDepth={ 0 } rounded={ true }>
+    <TextField style={ styles.login.panel.content_input } fullWidth={ true } underlineStyle={styles.underlineStyle} underlineFocusStyle={styles.underlineFocusStyle} disabled={ this.props.loading } ref="textFieldEmail" hintText="votre adresse email" /><br />
+    <br />
+    <TextField style={ styles.login.panel.content_input } fullWidth={ true } underlineStyle={styles.underlineStyle} underlineFocusStyle={styles.underlineFocusStyle} disabled={ this.props.loading } ref="textFieldPassord" hintText="votre mot de passe" type="password" /><br />
+    <br />
+    <RaisedButton label="Connexion" labelStyle={ styles.button.label } style={ styles.button.content } onMouseDown={ this.loginHandler.bind(this) } disabled={ this.props.loading } />
+  </Paper>
+  */
 
   render() {
     debug('render()');
     return (
-      <MuiThemeProvider muiTheme={ muiTheme }>
-        <Paper style={ styles.paperPage } zDepth={ 0 } rounded={ false }>
-          <Header />
-          <Paper style={ styles.paperContainer } zDepth={ 0 } rounded={ false }>
-            <Paper style={ styles.paperTitle } zDepth={ 0 } rounded={ true }>
-              <h1 style={ styles.blocTitle }>Rentrez vos identifiants</h1>
-            </Paper>
-            <Paper style={ styles.paperBloc } zDepth={ 0 } rounded={ true }>
-              <TextField fullWidth={ true } underlineStyle={styles.underlineStyle} underlineFocusStyle={styles.underlineFocusStyle} disabled={ this.props.loading } ref="textFieldEmail" hintText="votre adresse email" style={ styles.textField } /><br />
-              <br />
-              <TextField fullWidth={ true } underlineStyle={styles.underlineStyle} underlineFocusStyle={styles.underlineFocusStyle} disabled={ this.props.loading } ref="textFieldPassord" hintText="votre mot de passe" type="password" style={ styles.textField } /><br />
-              <br />
-              <RaisedButton label="Connexion" labelStyle={ styles.buttonLoginLabel } style={ styles.buttonLogin } onMouseDown={ this.loginHandler.bind(this) } disabled={ this.props.loading } />
-            </Paper>
-          </Paper>
-          <Snackbar
-            bodyStyle={ styles.toastError }
-            open={ this.props.toastError }
-            message={ this.props.toastMessage }
-            action="fermer"
-            autoHideDuration={ this.props.autoHideDuration }
-            onActionTouchTap={ UserActions.handleRequestClose }
-            onRequestClose={ UserActions.handleRequestClose }
-          />
-        </Paper>
-      </MuiThemeProvider>
+      <Paper style={ styles.paperContainer } zDepth={ 0 } rounded={ false }>
+        <SparkPanel
+          style={ styles.contentCenter }
+          title="Rentrez vos identifiants"
+          width={ 450 }
+          rounded={ true }
+          zDepth={ 0 }
+          backgroundTitleColor={ styles.colors.colorAbibaoMediumBlue }
+          textTitleColor={ styles.colors.colorAbibaoWhite }
+          backgroundContentColor={ styles.colors.colorAbibaoLightGrey }>
+          <TextField inputStyle={ styles.input } fullWidth={ true } ref="textFieldEmail" hintText="votre adresse email" />
+          <TextField fullWidth={ true } ref="textFieldPassord" hintText="votre mot de passe" type="password" />
+          <RaisedButton label="Connexion" onMouseDown={ this.loginHandler.bind(this) } disabled={ this.props.loading } />
+        </SparkPanel>
+        <Snackbar
+          bodyStyle={ styles.toastError }
+          open={ this.props.toastError }
+          message={ this.props.toastMessage }
+          action="fermer"
+          autoHideDuration={ this.props.autoHideDuration }
+          onActionTouchTap={ ApplicationActions.handleRequestClose }
+          onRequestClose={ ApplicationActions.handleRequestClose }
+        />
+      </Paper>
     );
   }
 

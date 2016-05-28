@@ -6,10 +6,11 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 // packages
 import Debug from 'debug';
 // local
-import Homepage from './containers/Homepage';
+import Application from './containers/Application';
+import PageNotFound from './containers/PageNotFound';
 import Login from './containers/Login';
 import Survey from './containers/Survey';
-import UserActions from './actions/UserActions';
+import ApplicationActions from './actions/ApplicationActions';
 import './../index.html';
 import './../css/reset.css';
 
@@ -17,37 +18,34 @@ const debug = Debug('react:application');
 
 injectTapEventPlugin();
 
-function onEnterHomepage(nextState, replace) {
-  debug('onEnterHomepage');
-  UserActions.getTokenFromCookie(function(token) {
+function onEnterApplication(nextState, replace) {
+  debug('onEnterApplication');
+  ApplicationActions.getTokenFromCookie(function(token) {
     debug('token=%s', token);
-    UserActions.validateToken(token);
+    ApplicationActions.validateToken(token, function(error) {
+      if (error) {
+        debug('onEnterApplication() error=%o', error);
+        browserHistory.push('/login');
+      }
+    });
   });
 }
 
-function onEnterSurvey(nextState, replace) {
-  debug('onEnterSurvey');
-}
-
-function onEnterLogin(nextState, replace) {
-  debug('onEnterLogin');
-}
-
-/*
-function requireAuth(nextState, replace) {
+/* function requireAuth(nextState, replace) {
   if (!UserStore.loggedIn()) {
     replace({
-      pathname: '/login',
+      pathname: '/',
       state: { nextPathname: nextState.location.pathname }
     })
   }
-}
-*/
+} */
 
 render((
   <Router history={ browserHistory }>
-    <Route path="/" component={ Homepage } onEnter={ onEnterHomepage } />
-    <Route path="/survey" component={ Survey } onEnter={ onEnterSurvey } />
-    <Route path="/login" component={ Login } onEnter={ onEnterLogin } />
+    <Route path="/" component={ Application } onEnter={ onEnterApplication }>
+      <Route path="/survey" component={ Survey } />
+      <Route path="/login" component={ Login } />
+    </Route>
+    <Route path="*" component={ PageNotFound } />
   </Router>
 ), document.getElementById('root'));
