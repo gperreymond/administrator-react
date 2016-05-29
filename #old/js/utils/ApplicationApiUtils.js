@@ -14,7 +14,7 @@ const searchParams = function(params) {
 
 export default {
   login(email, password) {
-    debug('login email=%s', email);
+    debug('login() email=%s', email);
     let params = {
       method: 'post',
       body: searchParams({
@@ -25,7 +25,7 @@ export default {
     return xhr('http://api.pprod.abibao.com/v1/individuals/login', params);
   },
   loginWithToken(token) {
-    debug('loginWithToken token=%s', token);
+    debug('loginWithToken() token=%s', token);
     let params = {
       method: 'get',
       headers: {
@@ -35,7 +35,7 @@ export default {
     return xhr('http://api.pprod.abibao.com/v1/auth/global/informations', params);
   },
   loadSurvey(token, urn) {
-    debug('loadSurvey urn=%s', urn);
+    debug('loadSurvey() urn=%s', urn);
     let params = {
       method: 'get',
       headers: {

@@ -1,51 +1,38 @@
 // react
 import React from 'react';
-import { browserHistory, Router, Route, IndexRoute, Link, withRouter } from 'react-router';
-import { render } from 'react-dom'
 import injectTapEventPlugin from 'react-tap-event-plugin';
+import { browserHistory, Router, Route, IndexRoute, withRouter } from 'react-router';
+import { render } from 'react-dom';
 // packages
 import Debug from 'debug';
 // local
+import reset from './../css/reset.css';
 import Application from './containers/Application';
-import PageNotFound from './containers/PageNotFound';
 import Login from './containers/Login';
-import Survey from './containers/Survey';
 import ApplicationActions from './actions/ApplicationActions';
-import './../index.html';
-import './../css/reset.css';
 
-const debug = Debug('react:application');
+const debug = Debug('react:router');
 
 injectTapEventPlugin();
 
-function onEnterApplication(nextState, replace) {
-  debug('onEnterApplication');
+function onEnterRoute(nextState, replace) {
+  ApplicationActions.setLoading(true);
   ApplicationActions.getTokenFromCookie(function(token) {
-    debug('token=%s', token);
     ApplicationActions.validateToken(token, function(error) {
       if (error) {
-        debug('onEnterApplication() error=%o', error);
+        debug('onEnterState error=%o', error);
         browserHistory.push('/login');
+      } else {
+        debug('onEnterState token=%s', token);
       }
     });
   });
 }
 
-/* function requireAuth(nextState, replace) {
-  if (!UserStore.loggedIn()) {
-    replace({
-      pathname: '/',
-      state: { nextPathname: nextState.location.pathname }
-    })
-  }
-} */
-
 render((
   <Router history={ browserHistory }>
-    <Route path="/" component={ Application } onEnter={ onEnterApplication }>
-      <Route path="/survey" component={ Survey } />
+    <Route path="/" component={ Application } onEnter={ onEnterRoute }>
       <Route path="/login" component={ Login } />
     </Route>
-    <Route path="*" component={ PageNotFound } />
   </Router>
 ), document.getElementById('root'));

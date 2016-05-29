@@ -26,9 +26,20 @@ const styles = {
   contentCenter: {
     margin: 'auto'
   },
-  input: {
-    border: 'solid red 2px',
-    marginBottom: 50
+  textfield: {
+    input: {
+      background: colors.colorAbibaoWhite
+    },
+    default: {
+      fontSize: '1.25em'
+    },
+    underlineStyle: {
+      borderColor: colors.colorAbibaoWhite,
+      color: colors.colorAbibaoGrey
+    },
+    underlineFocusStyle: {
+      borderColor: colors.colorAbibaoMediumBlue
+    }
   }
 };
 

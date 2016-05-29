@@ -85,14 +85,14 @@ class ApplicationStore {
   }
 
   onReceivedLoading(loading) {
-    debug('onReceivedLoading loading=%s', loading);
+    debug('onReceivedLoading() loading=%s', loading);
     this.setState({
       loading: loading
     });
   }
 
   onReceivedCurrentUser(user) {
-    debug('onReceivedCurrentUser user=%o', user);
+    debug('onReceivedCurrentUser() user=%o', user);
     this.setState({
       token: user.token,
       globalInfos: user.globalInfos,
@@ -101,7 +101,7 @@ class ApplicationStore {
   }
 
   onReceivedError(error) {
-    debug('onReceivedError error=%o', error);
+    debug('onReceivedError() error=%o', error);
     this.setState({
       toastError: true,
       toastMessage: error.message

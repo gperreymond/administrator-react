@@ -64,7 +64,7 @@ class SparkPanel extends Component {
         padding: 0
       },
       content: {
-        padding: 10,
+        padding: 20,
         background: this.props.backgroundContentColor,
         display: 'flex',
         flexDirection: 'column'
