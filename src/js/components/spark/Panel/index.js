@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import { Paper } from 'material-ui';
 // packages
 // local
+import baseTheme from '../theme.css'
 
 class SparkPanel extends Component {
 
@@ -22,14 +23,14 @@ class SparkPanel extends Component {
 
   static defaultProps = {
     showHeader: true,
-    headerHeight: 60,
+    headerHeight: 80,
     title: 'Panel title',
     rounded: false,
     zDepth: 1,
     width: 500,
-    backgroundTitleColor: '#dedede',
-    textTitleColor: '#101010',
-    backgroundContentColor: '#f0f0f0'
+    backgroundTitleColor: baseTheme.palette.primary1Color,
+    textTitleColor: baseTheme.palette.alternateTextColor,
+    backgroundContentColor: baseTheme.palette.canvasColor
   }
 
   showHeader() {
