@@ -17,7 +17,7 @@ class SparkBoxCenter extends Component {
 
     this._style = {
       Container: {
-        display: 'flex',
+        display: 'flex', 
         alignItems: 'center',
         justifyContent: 'center',
         height: '100%'

@@ -4,6 +4,17 @@ const path = require('path');
 const nodeEnv = process.env.NODE_ENV || 'development';
 const isProd = nodeEnv === 'production';
 
+const AUTOPREFIXER_BROWSERS = [
+  'Android 2.3',
+  'Android >= 4',
+  'Chrome >= 35',
+  'Firefox >= 31',
+  'Explorer >= 9',
+  'iOS >= 7',
+  'Opera >= 12',
+  'Safari >= 7.1',
+];
+
 module.exports = {
   devtool: isProd ? 'hidden-source-map' : 'cheap-eval-source-map',
   context: path.join(__dirname, './src/js'),
@@ -26,7 +37,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loaders: [ 'style', 'css' ]
+        loaders: [ 'style', 'css', 'postcss-loader?pack=default', ]
       },
       {
         test: /\.(js|jsx)$/,
@@ -71,5 +82,14 @@ module.exports = {
   devServer: {
     contentBase: './src'
     // hot: true
+  },
+  postcss(bundler) {
+    return {
+      default: [
+        // Add vendor prefixes to CSS rules using values from caniuse.com
+        // https://github.com/postcss/autoprefixer
+        require('autoprefixer')({ browsers: AUTOPREFIXER_BROWSERS }),
+      ]
+    };
   }
 };

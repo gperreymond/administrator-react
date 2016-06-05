@@ -16,7 +16,8 @@ const styles = {
     width: '100%',
     height: '100%',
     padding: 0,
-    margin: 0
+    margin: 0,
+    marginTop: -120
   }
 }
 
@@ -38,25 +39,25 @@ class Login extends Component {
   render() {
     return(
       <div style={ styles.Page }>
-        <MediaQuery minDeviceWidth={ 1224 }>
+        <MediaQuery minDeviceWidth={ 641 }>
           <SparkBoxCenter>
-            <SparkPanel title="Rentrez vos identifiants" headerHeight={ 80 } rounded={ true }>
+            <SparkPanel title="Rentrez vos identifiants" width={ 450 } headerHeight={ 80 } rounded={ true }>
               <TextField hintText="Votre adresse email" fullWidth={ true } /><br />
               <TextField hintText="Votre mot de passe" fullWidth={ true } /><br />
               <br />
-              <SparkHBox width="100%" justifyContent='space-between'>
+              <SparkHBox width={ '100%' } justifyContent='space-between'>
                 <FlatButton style={ styles.ButtonRegister } label="S'enregistrer" primary={ true } />
                 <RaisedButton style={ styles.ButtonLogin } label="Connexion" primary={ true } fullWidth={ false } />
               </SparkHBox>
             </SparkPanel>
           </SparkBoxCenter>
         </MediaQuery>
-        <MediaQuery maxDeviceWidth={ 1224 }>
-          <SparkPanel title="Rentrez vos identifiants" width="100%" headerHeight={ 80 } rounded={ true }>
+        <MediaQuery maxDeviceWidth={ 640 }>
+          <SparkPanel title="Rentrez vos identifiants" width={ '100%' } headerHeight={ 80 } rounded={ true }>
             <TextField hintText="Votre adresse email" fullWidth={ true } /><br />
             <TextField hintText="Votre mot de passe" fullWidth={ true } /><br />
             <br />
-            <SparkHBox width="100%" justifyContent='space-between'>
+            <SparkHBox width={ '100%' } justifyContent='space-between'>
               <FlatButton style={ styles.ButtonRegister } label="S'enregistrer" primary={ true } />
               <RaisedButton style={ styles.ButtonLogin } label="Connexion" primary={ true } fullWidth={ false } />
             </SparkHBox>

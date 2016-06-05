@@ -36,16 +36,26 @@ class SparkApplication extends Component {
     const loader = new SparkLoader();
 
     this._style = {
-      page: {
+      BackgroundStyle: {
         width: '100%',
-        height: '100%'
+        height: '100%',
+        padding: 0,
+        margin: 0,
+        backgroundColor: sparkTheme.palette.canvasColor
       }
     }
 
     return (
       <MuiThemeProvider muiTheme={ muiTheme }>
-        <Loader backgroundStyle={ {backgroundColor: sparkTheme.palette.canvasColor} } style={ this._style.page } message={ loader.render() } show={ this.props.loading } hideContentOnLoad={ true }>
-          <Paper style={ this._style.page }>
+        <Loader
+          contentStyle={ this._style.BackgroundStyle }
+          foregroundStyle={ this._style.BackgroundStyle }
+          backgroundStyle={ this._style.BackgroundStyle }
+          style={ this._style.BackgroundStyle }
+          message={ loader.render() }
+          show={ this.props.loading }
+          hideContentOnLoad={ true }>
+          <Paper style={ this._style.BackgroundStyle }>
             { this.props.children }
           </Paper>
         </Loader>
