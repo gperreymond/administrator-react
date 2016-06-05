@@ -8,7 +8,6 @@ import Debug from 'debug';
 import Loader from 'react-loader-advanced';
 // local
 import sparkTheme from './../theme.css';
-import SkinApplication from './skin.css';
 import SparkLoader from './../Loader';
 
 const debug = Debug('react:spark:application');
@@ -35,10 +34,18 @@ class SparkApplication extends Component {
   render() {
     debug('render');
     const loader = new SparkLoader();
+
+    this._style = {
+      page: {
+        width: '100%',
+        height: '100%'
+      }
+    }
+
     return (
       <MuiThemeProvider muiTheme={ muiTheme }>
-        <Loader backgroundStyle={ {backgroundColor: sparkTheme.palette.canvasColor} } style={ SkinApplication.page } message={ loader.render() } show={ this.props.loading } hideContentOnLoad={ true }>
-          <Paper style={ SkinApplication.page }>
+        <Loader backgroundStyle={ {backgroundColor: sparkTheme.palette.canvasColor} } style={ this._style.page } message={ loader.render() } show={ this.props.loading } hideContentOnLoad={ true }>
+          <Paper style={ this._style.page }>
             { this.props.children }
           </Paper>
         </Loader>

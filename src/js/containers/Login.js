@@ -1,10 +1,13 @@
 // react
 import React, { Component } from 'react';
 import { TextField, RaisedButton, FlatButton } from 'material-ui';
+import MediaQuery from 'react-responsive';
 // packages
 import Debug from 'debug';
 // local
-import SparkPanelComponent from './../components/spark/Panel';
+import SparkPanel from './../components/spark/Panel';
+import SparkBoxCenter from './../components/spark/BoxCenter';
+import SparkHBox from './../components/spark/HBox';
 
 const debug = Debug('react:containers:login');
 
@@ -14,30 +17,6 @@ const styles = {
     height: '100%',
     padding: 0,
     margin: 0
-  },
-  Aligner: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: '100%'
-  },
-  AlignerItem: {
-    maxWidth: '50%'
-  },
-  AlignerItemTop: {
-    maxWidth: '50%',
-    alignSelf: 'flex-start'
-  },
-  AlignerItemBottom: {
-    maxWidth: '50%',
-    alignSelf: 'flex-end'
-  },
-  AlignerButtons: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    height: '100%',
-    width: '100%'
   }
 }
 
@@ -58,21 +37,31 @@ class Login extends Component {
 
   render() {
     return(
-      <AppBar showMenuIconButton={ false } />
-      <div style={ styles.Aligner }>
-        <div style={ styles.AlignerItemTop }></div>
-        <div style={ styles.AlignerItem }>
-          <SparkPanelComponent title="Rentrez vos identifiants" headerHeight={ 80 } rounded={ true }>
+      <div style={ styles.Page }>
+        <MediaQuery minDeviceWidth={ 1224 }>
+          <SparkBoxCenter>
+            <SparkPanel title="Rentrez vos identifiants" headerHeight={ 80 } rounded={ true }>
+              <TextField hintText="Votre adresse email" fullWidth={ true } /><br />
+              <TextField hintText="Votre mot de passe" fullWidth={ true } /><br />
+              <br />
+              <SparkHBox width="100%" justifyContent='space-between'>
+                <FlatButton style={ styles.ButtonRegister } label="S'enregistrer" primary={ true } />
+                <RaisedButton style={ styles.ButtonLogin } label="Connexion" primary={ true } fullWidth={ false } />
+              </SparkHBox>
+            </SparkPanel>
+          </SparkBoxCenter>
+        </MediaQuery>
+        <MediaQuery maxDeviceWidth={ 1224 }>
+          <SparkPanel title="Rentrez vos identifiants" width="100%" headerHeight={ 80 } rounded={ true }>
             <TextField hintText="Votre adresse email" fullWidth={ true } /><br />
             <TextField hintText="Votre mot de passe" fullWidth={ true } /><br />
             <br />
-            <div style={ styles.AlignerButtons }>
+            <SparkHBox width="100%" justifyContent='space-between'>
               <FlatButton style={ styles.ButtonRegister } label="S'enregistrer" primary={ true } />
               <RaisedButton style={ styles.ButtonLogin } label="Connexion" primary={ true } fullWidth={ false } />
-            </div>
-          </SparkPanelComponent>
-        </div>
-        <div style={ styles.AlignerItemBottom }></div>
+            </SparkHBox>
+          </SparkPanel>
+        </MediaQuery>
       </div>
     );
   }
