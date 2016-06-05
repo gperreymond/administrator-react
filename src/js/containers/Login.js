@@ -1,6 +1,6 @@
 // react
 import React, { Component } from 'react';
-import { AppBar, TextField, RaisedButton, FlatButton } from 'material-ui';
+import { TextField, RaisedButton, FlatButton } from 'material-ui';
 // packages
 import Debug from 'debug';
 // local
@@ -58,23 +58,21 @@ class Login extends Component {
 
   render() {
     return(
-      <div style={ styles.Page }>
-        <AppBar showMenuIconButton={ false } />
-        <div style={ styles.Aligner }>
-          <div style={ styles.AlignerItemTop }></div>
-          <div style={ styles.AlignerItem }>
-            <SparkPanelComponent title="Rentrez vos identifiants" headerHeight={ 80 } rounded={ true }>
-              <TextField hintText="Votre adresse email" fullWidth={ true } /><br />
-              <TextField hintText="Votre mot de passe" fullWidth={ true } /><br />
-              <br />
-              <div style={ styles.AlignerButtons }>
-                <FlatButton style={ styles.ButtonRegister } label="S'enregistrer" primary={ true } />
-                <RaisedButton style={ styles.ButtonLogin } label="Connexion" primary={ true } fullWidth={ false } />
-              </div>
-            </SparkPanelComponent>
-          </div>
-          <div style={ styles.AlignerItemBottom }></div>
+      <AppBar showMenuIconButton={ false } />
+      <div style={ styles.Aligner }>
+        <div style={ styles.AlignerItemTop }></div>
+        <div style={ styles.AlignerItem }>
+          <SparkPanelComponent title="Rentrez vos identifiants" headerHeight={ 80 } rounded={ true }>
+            <TextField hintText="Votre adresse email" fullWidth={ true } /><br />
+            <TextField hintText="Votre mot de passe" fullWidth={ true } /><br />
+            <br />
+            <div style={ styles.AlignerButtons }>
+              <FlatButton style={ styles.ButtonRegister } label="S'enregistrer" primary={ true } />
+              <RaisedButton style={ styles.ButtonLogin } label="Connexion" primary={ true } fullWidth={ false } />
+            </div>
+          </SparkPanelComponent>
         </div>
+        <div style={ styles.AlignerItemBottom }></div>
       </div>
     );
   }
