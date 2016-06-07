@@ -30,6 +30,8 @@ services:
     container_name: elasticsearch.xxxxxx.com.local
     image: elasticsearch:2.3.3
     privileged: true
+    volumes:
+      - ./docker/volumes/local/elasticsearch:/usr/share/elasticsearch/data
     command: elasticsearch -Des.network.host=0.0.0.0
   logstash:
     container_name: logstash.xxxxxx.com.local
