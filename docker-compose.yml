@@ -26,3 +26,21 @@ services:
       - MYSQL_USER=admin
       - MYSQL_PASSWORD=zh2y5Xtjt4TkJB8HgsWK
       - MYSQL_DATABASE=xxxxxx
+  elasticsearch:
+    container_name: elasticsearch.xxxxxx.com.local
+    image: elasticsearch:2.3.3
+    privileged: true
+    command: elasticsearch -Des.network.host=0.0.0.0
+  logstash:
+    container_name: logstash.xxxxxx.com.local
+    image: logstash:2.3.2-1
+    privileged: true
+    command: logstash -f /etc/logstash/conf.d/logstash.conf
+    volumes:
+      - ./docker/logstash/config:/etc/logstash/conf.d
+  kibana:
+    container_name: kibana.xxxxxx.com.local
+    build: docker/kibana/
+    privileged: true
+    volumes:
+      - ./docker/kibana/config/:/opt/kibana/config/
