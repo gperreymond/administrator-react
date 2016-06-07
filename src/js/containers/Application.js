@@ -1,8 +1,7 @@
 // react
-import React, { Component } from 'react';
-import { AppBar } from 'material-ui';
+import React, { Component, PropTypes } from 'react';
 // packages
-import Debug from 'debug';
+import logger from 'debug';
 import connectToStores from 'alt-utils/lib/connectToStores';
 // local
 import Header from './Header';
@@ -10,16 +9,26 @@ import SparkApplicationComponent from './../components/spark/Application';
 import ApplicationStore from './../stores/ApplicationStore';
 import ApplicationActions from './../actions/ApplicationActions';
 
-const debug = Debug('react:containers:application');
+const debug = logger('react:containers:application');
 
 const styles = {
   Page: {
     width: '100%',
     height: '100%'
   }
-}
+};
 
 class Application extends Component {
+
+  static propTypes = {
+    loading: PropTypes.bool,
+    style: PropTypes.object,
+    children: PropTypes.node
+  }
+
+  static defaultProps = {
+    loading: true
+  }
 
   static getStores() {
     return [ApplicationStore];
@@ -44,12 +53,12 @@ class Application extends Component {
   }
 
   render() {
-    return(
-      <SparkApplicationComponent style={ styles.Page } loading={ this.props.loading }>
+    return (
+      <SparkApplicationComponent style={styles.Page} loading={this.props.loading}>
         <Header />
-        { this.props.children }
+        {this.props.children}
       </SparkApplicationComponent>
-    )
+    );
   }
 
 }

@@ -43,20 +43,21 @@ class SparkApplication extends Component {
         margin: 0,
         backgroundColor: sparkTheme.palette.canvasColor
       }
-    }
+    };
 
     return (
-      <MuiThemeProvider muiTheme={ muiTheme }>
+      <MuiThemeProvider muiTheme={muiTheme}>
         <Loader
-          contentStyle={ this._style.BackgroundStyle }
-          foregroundStyle={ this._style.BackgroundStyle }
-          backgroundStyle={ this._style.BackgroundStyle }
-          style={ this._style.BackgroundStyle }
-          message={ loader.render() }
-          show={ this.props.loading }
-          hideContentOnLoad={ true }>
-          <Paper style={ this._style.BackgroundStyle }>
-            { this.props.children }
+          contentStyle={this._style.BackgroundStyle}
+          foregroundStyle={this._style.BackgroundStyle}
+          backgroundStyle={this._style.BackgroundStyle}
+          style={this._style.BackgroundStyle}
+          message={loader.render()}
+          show={this.props.loading}
+          hideContentOnLoad
+        >
+          <Paper style={this._style.BackgroundStyle}>
+            {this.props.children}
           </Paper>
         </Loader>
       </MuiThemeProvider>

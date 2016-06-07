@@ -1,0 +1,28 @@
+version: '2'
+services:
+  rabbitmq:
+    container_name: rabbitmq.xxxxxx.com.local
+    image: rabbitmq:3.6.2-management
+    privileged: true
+    volumes:
+      - ./docker/volumes/local/rabbitmq:/var/lib/rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=uaLEm6NmTpK3t2mRCSrS
+  rethinkdb:
+    container_name: rethinkdb.xxxxxx.com.local
+    image: rethinkdb:2.3.3
+    privileged: true
+    volumes:
+      - ./docker/volumes/local/rethinkdb:/data
+  mysql:
+    container_name: mysql.xxxxxx.com.local
+    image: mysql/mysql-server:5.7.12
+    privileged: true
+    volumes:
+      - ./docker/volumes/local/mysql:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=p6s9rXdVnfxGcX9UZck8
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=zh2y5Xtjt4TkJB8HgsWK
+      - MYSQL_DATABASE=xxxxxx

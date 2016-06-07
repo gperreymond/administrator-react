@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Paper, AppBar } from 'material-ui';
 // packages
 // local
-import baseTheme from './../components/spark/theme.css'
+import baseTheme from './../components/spark/theme.css';
 
 const styles = {
   paperPage: {
@@ -50,11 +50,11 @@ const styles = {
 class Header extends Component {
   render() {
     return (
-      <Paper style={ styles.paperPage } zDepth={ 0 } rounded={ false }>
-        <AppBar showMenuIconButton={ false } style={ styles.headerRight } />
-        <AppBar showMenuIconButton={ false } style={ styles.headerLeft } />
-        <div style={ styles.logo }>
-          <img style={ styles.logoImg } src="./img/abibao_logo.png" />
+      <Paper style={styles.paperPage} zDepth={0} rounded={false}>
+        <AppBar showMenuIconButton={false} style={styles.headerRight} />
+        <AppBar showMenuIconButton={false} style={styles.headerLeft} />
+        <div style={styles.logo}>
+          <img role="presentation" style={styles.logoImg} src="./img/abibao_logo.png" />
         </div>
       </Paper>
     );

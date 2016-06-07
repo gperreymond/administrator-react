@@ -37,7 +37,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loaders: [ 'style', 'css', 'postcss-loader?pack=default', ]
+        loaders: ['style', 'css', 'postcss-loader?pack=default']
       },
       {
         test: /\.(js|jsx)$/,
@@ -83,7 +83,7 @@ module.exports = {
     contentBase: './src'
     // hot: true
   },
-  postcss(bundler) {
+  postcss() {
     return {
       default: [
         // Add vendor prefixes to CSS rules using values from caniuse.com
