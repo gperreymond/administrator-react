@@ -1,20 +1,16 @@
 // react
 import React from 'react';
-import injectTapEventPlugin from 'react-tap-event-plugin';
 import { browserHistory, Router, Route } from 'react-router';
 import { render } from 'react-dom';
 // packages
 import logger from 'debug';
 // local
 import reset from './../css/reset.css';
-import master from './../css/master.css';
 import Application from './containers/Application';
 import Login from './containers/Login';
 import ApplicationActions from './actions/ApplicationActions';
 
 const debug = logger('react:router');
-
-injectTapEventPlugin();
 
 function onEnterRoute(nextState, replace) {
   ApplicationActions.setLoading(true);

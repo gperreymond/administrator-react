@@ -12,18 +12,18 @@ import SparkLoader from './../Loader';
 
 const debug = Debug('react:spark:application');
 
-const muiTheme = getMuiTheme(sparkTheme);
-
 class SparkApplication extends Component {
 
   static propTypes = {
     loading: PropTypes.bool,
+    theme: PropTypes.object,
     style: PropTypes.object,
     children: PropTypes.node
   }
 
   static defaultProps = {
-    loading: true
+    loading: true,
+    theme: sparkTheme
   }
 
   constructor(props) {
@@ -46,7 +46,7 @@ class SparkApplication extends Component {
     };
 
     return (
-      <MuiThemeProvider muiTheme={muiTheme}>
+      <MuiThemeProvider muiTheme={getMuiTheme(this.props.theme)}>
         <Loader
           contentStyle={this._style.BackgroundStyle}
           foregroundStyle={this._style.BackgroundStyle}

@@ -14,18 +14,25 @@ class ApplicationActions {
   constructor() {
   }
 
+  setLoading(value) {
+    debug('setLoading=%s', value);
+    this.receivedLoading(value);
+  }
+
+  setEmailForRegister(e) {
+    debug('setEmailForRegister=%s', e.currentTarget.value);
+    this.receivedEmailForRegister(e.currentTarget.value);
+  }
+
   getTokenFromCookie(callback) {
     debug('getTokenFromCookie');
-    this.receivedLoading(true);
     var _token = cookie.load('abibao_user_token');
     callback(_token);
   }
 
   validateToken(token, callback) {
     debug('validateToken token=%s', token);
-    this.receivedLoading(true);
-    ApplicationApiUtils.loginWithToken(token)
-    .then((infos) => {
+    ApplicationApiUtils.loginWithToken(token).then((infos) => {
       let user = {
         token: token,
         globalInfos: infos
@@ -33,41 +40,16 @@ class ApplicationActions {
       cookie.save('abibao_user_token', user.token, { path: '/' });
       this.receivedCurrentUser(user);
       callback(null);
-    })
-    .catch((error) => {
-      this.receivedLoading(false);
+    }).catch((error) => {
       cookie.remove('abibao_user_token');
       callback(error);
     })
   }
 
-  login(email, password) {
-    debug('login email=%s', email);
-    this.receivedLoading(true);
-    cookie.remove('abibao_user_token');
-    ApplicationApiUtils.login(email, password).then((user) => {
-      cookie.save('abibao_user_token', user.token, { path: '/' });
-      this.receivedCurrentUser(user);
-      browserHistory.push('/');
-    }).catch((error) => {
-      this.receivedError(error);
-    });
-  }
-
-  loadSurvey(token, urn) {
-    debug('loadSurvey urn=%s', urn);
-    // this.receivedLoading(true);
-    ApplicationApiUtils.loadSurvey(token, urn).then((survey) => {
-      this.receivedCurrentSurvey(survey);
-    }).catch((error) => {
-      this.receivedError(error);
-    });
-  }
-
-  // close toast
-  handleRequestClose() {
-    debug('handleRequestClose');
-    alt.dispatch('ApplicationActions.handleRequestClose');
+  // email with register
+  receivedEmailForRegister(email) {
+    debug('receivedEmailForRegister email=%s', email);
+    alt.dispatch('ApplicationActions.receivedEmailForRegister', email);
   }
 
   // actions in progress
@@ -80,22 +62,14 @@ class ApplicationActions {
   receivedCurrentUser(user) {
     debug('receivedCurrentUser user=%o', user);
     alt.dispatch('ApplicationActions.receivedCurrentUser', user);
-    this.receivedLoading(false);
   }
 
   // bad authentification
   receivedError(error) {
     debug('receivedError error=%o', error);
     alt.dispatch('ApplicationActions.receivedError', error);
-    this.receivedLoading(false);
   }
 
-  // survey to loading
-  receivedCurrentSurvey(survey) {
-    debug('receivedCurrentSurvey survey=%o', survey);
-    alt.dispatch('ApplicationActions.receivedCurrentSurvey', survey);
-    // this.receivedLoading(false);
-  }
 }
 
 export default alt.createActions(ApplicationActions);

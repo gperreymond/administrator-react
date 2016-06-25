@@ -11,22 +11,20 @@ class ApplicationStore {
 
   constructor() {
     this.bindListeners({
-      onReceivedCurrentUser: ApplicationActions.RECEIVED_CURRENT_USER,
       onReceivedLoading: ApplicationActions.RECEIVED_LOADING,
-      onReceivedError: ApplicationActions.RECEIVED_ERROR,
-      onHandleRequestClose:  ApplicationActions.HANDLE_REQUEST_CLOSE
+      onReceivedEmailForRegister: ApplicationActions.RECEIVED_EMAIL_FOR_REGISTER,
+      onReceivedCurrentUser: ApplicationActions.RECEIVED_CURRENT_USER,
+      onReceivedError: ApplicationActions.RECEIVED_ERROR
     });
     this.state = {
-      // Snackbar
-      toastError: false,
-      toastMessage: '',
-      autoHideDuration: 2000,
       // Loading state
       loading: false,
       // User
       token: false,
       globalInfos: false,
-      connected: false
+      // register
+      emailForRegister: false,
+      entityForRegister: false
     };
   }
 
@@ -77,35 +75,30 @@ class ApplicationStore {
     return nextState;
   }
 
-  onHandleRequestClose() {
-    this.setState({
-      toastError: false,
-      toastMessage: ''
-    });
-  }
-
   onReceivedLoading(loading) {
-    debug('onReceivedLoading() loading=%s', loading);
+    debug('onReceivedLoading loading=%s', loading);
     this.setState({
       loading: loading
     });
   }
 
+  onReceivedEmailForRegister(email) {
+    debug('onReceivedEmailForRegister email=%o', email);
+    this.setState({
+      emailForRegister: email
+    });
+  }
+
   onReceivedCurrentUser(user) {
-    debug('onReceivedCurrentUser() user=%o', user);
+    debug('onReceivedCurrentUser user=%o', user);
     this.setState({
       token: user.token,
-      globalInfos: user.globalInfos,
-      connected: true
+      globalInfos: user.globalInfos
     });
   }
 
   onReceivedError(error) {
-    debug('onReceivedError() error=%o', error);
-    this.setState({
-      toastError: true,
-      toastMessage: error.message
-    });
+    debug('onReceivedError error=%o', error);
   }
 }
 

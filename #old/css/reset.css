@@ -1,9 +1,0 @@
-html, body, #root  {
-  height: 100%;
-  padding: 0;
-  margin: 0;
-}
-
-input:-webkit-autofill {
-  background: #ffffff !important;
-}

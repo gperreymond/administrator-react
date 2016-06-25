@@ -4,6 +4,7 @@ import React, { Component, PropTypes } from 'react';
 import logger from 'debug';
 import connectToStores from 'alt-utils/lib/connectToStores';
 // local
+import abibaoTheme from './../../css/abibaoTheme.css';
 import Header from './Header';
 import SparkApplicationComponent from './../components/spark/Application';
 import ApplicationStore from './../stores/ApplicationStore';
